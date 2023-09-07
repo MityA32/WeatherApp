@@ -19,7 +19,7 @@ class WeatherForecastByDayTableViewCell: UITableViewCell {
         let maxMinTemps = model.maxMinTemps
         cellView.setupByModel(
             weekday: String(weekday),
-            maxMinTemps: "\(maxMinTemps.0)˚ / \(maxMinTemps.1)˚",
+            maxMinTemps: "\(maxMinTemps.0)º / \(maxMinTemps.1)º",
             condition: model.mostTimesConditionImage
         )
         NSLayoutConstraint.activate([

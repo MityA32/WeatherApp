@@ -41,7 +41,7 @@ final class WeatherForecastByDayTableViewCellView: UIView {
         addSubview(weekdayLabel)
         
         maxMinTempsLabel.translatesAutoresizingMaskIntoConstraints = false
-        maxMinTempsLabel.text = "--˚/ --˚"
+        maxMinTempsLabel.text = "--º/ --º"
         maxMinTempsLabel.textColor = .black
         maxMinTempsLabel.font = .systemFont(ofSize: 24, weight: .medium)
         maxMinTempsLabel.textAlignment = .center

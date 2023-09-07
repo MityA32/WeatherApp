@@ -64,7 +64,7 @@ final class WeatherDetailsElementView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         switch type {
         case .maxMinTemp:
-            label.text = "--˚/ --˚"
+            label.text = "--º/ --º"
         case .humidity:
             label.text = "--%"
         case .wind:

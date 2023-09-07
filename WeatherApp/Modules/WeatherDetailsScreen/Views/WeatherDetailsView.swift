@@ -101,7 +101,7 @@ class WeatherDetailsView: UIView {
     }
 
     private func setTemp(max: Int, min: Int) {
-        temperatureView.setLabel(with: "\(max)˚/ \(min)˚")
+        temperatureView.setLabel(with: "\(max)º/ \(min)º")
     }
     
     private func setHumidity(level: String) {
