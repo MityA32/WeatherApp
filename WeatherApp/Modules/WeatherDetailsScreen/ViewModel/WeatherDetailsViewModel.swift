@@ -18,7 +18,7 @@ final class WeatherDetailsViewModel {
     let inSelectedIndexOfDay = BehaviorRelay<Int>(value: 0)
     private let _outWeather = PublishRelay<OrderedDictionary<String, [Weather]>>()
     private(set) lazy var outWeather = self._outWeather.asObservable()
-    private let _outWeatherForecastBySelectedDay = BehaviorRelay<[Weather]?>(value: nil)
+    private let _outWeatherForecastBySelectedDay = PublishRelay<[Weather]>()
     private(set) lazy var outWeatherForecastBySelectedDay = self._outWeatherForecastBySelectedDay.asObservable()
     
     

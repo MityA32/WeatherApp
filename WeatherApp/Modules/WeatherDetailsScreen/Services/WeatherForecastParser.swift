@@ -42,7 +42,7 @@ final class WeatherForecastParser: Parseable {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
         if let timeDate = dateFormatter.date(from: time) {
             let calendar = Calendar.current
-            let hour = calendar.component(.hour, from: timeDate) - 3
+            let hour = calendar.component(.hour, from: timeDate)
             return hour < 7 || hour > 20
         }
         print("Invalid time format")

@@ -76,20 +76,23 @@ private extension WeatherDetailsScreenViewController {
     }
     
     private func setupWeatherTempsByHoursCollectionView() {
-        let collectionViewLayout = UICollectionViewFlowLayout()
-        collectionViewLayout.scrollDirection = .horizontal
-        weatherTempsByHoursCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.width / 4 - 10, height: view.frame.height * 0.14)
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumInteritemSpacing = 0.0
+        weatherTempsByHoursCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         guard let collectionView = weatherTempsByHoursCollectionView else { return }
         collectionView.backgroundColor = UIColor(named: "hex_5A9FF0")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(WeatherTempsByHoursCollectionViewCell.self, forCellWithReuseIdentifier: WeatherTempsByHoursCollectionViewCell.id)
         view.addSubview(collectionView)
-        
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: generalDetailsView.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
+            collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.15)
         ])
     }
     
@@ -100,7 +103,6 @@ private extension WeatherDetailsScreenViewController {
         weatherForecastByDayTableView.backgroundColor = UIColor(named: "hex_FFFFFF")
         weatherForecastByDayTableView.separatorStyle = .none
         
-//        weatherForecastByDayTableView.rowHeight = UITableView.automaticDimension
         view.addSubview(weatherForecastByDayTableView)
         guard let weatherTempsByHoursCollectionView else { return }
         NSLayoutConstraint.activate([
@@ -134,8 +136,14 @@ private extension WeatherDetailsScreenViewController {
             .disposed(by: disposeBag)
         viewModel.outWeatherForecastBySelectedDay
             .bind(onNext: { [weak self] weatherData in
-                self?.generalDetailsView.config(from: weatherData ?? [])
+                self?.generalDetailsView.config(from: weatherData)
             })
+            .disposed(by: disposeBag)
+        guard let weatherTempsByHoursCollectionView else { return }
+        viewModel.outWeatherForecastBySelectedDay
+            .bind(to: weatherTempsByHoursCollectionView.rx.items(cellIdentifier: WeatherTempsByHoursCollectionViewCell.id, cellType: WeatherTempsByHoursCollectionViewCell.self)) { index, model, cell in
+                cell.config(from: model)
+            }
             .disposed(by: disposeBag)
     }
 }
