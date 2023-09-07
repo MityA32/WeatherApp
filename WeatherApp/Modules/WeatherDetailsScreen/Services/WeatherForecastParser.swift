@@ -25,7 +25,7 @@ final class WeatherForecastParser: Parseable {
                 }
                 return Weather(
                     weekdayDate: date.formattedForWeatherDetails ,
-                    time: date.formatted(.dateTime.hour()),
+                    time: date.formattedTo24Hour(),
                     temp: Int(weather.main.temp - 273),
                     humidity: "\(weather.main.humidity)",
                     windSpeed: "\(weather.wind.speed)",
@@ -49,3 +49,4 @@ final class WeatherForecastParser: Parseable {
         return false
     }
 }
+

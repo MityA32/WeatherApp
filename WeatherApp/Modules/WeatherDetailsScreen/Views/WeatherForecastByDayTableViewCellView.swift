@@ -24,21 +24,27 @@ final class WeatherForecastByDayTableViewCellView: UIView {
     
     private func setup() {
         translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .white
         setupSubviews()
     }
     
     private func setupSubviews() {
         weekdayLabel.translatesAutoresizingMaskIntoConstraints = false
         weekdayLabel.text = "--"
+        weekdayLabel.font = .systemFont(ofSize: 24, weight: .medium)
+        weekdayLabel.textColor = .black
+        
         addSubview(weekdayLabel)
         
         maxMinTempsLabel.translatesAutoresizingMaskIntoConstraints = false
         maxMinTempsLabel.text = "--˚/ --˚"
+        maxMinTempsLabel.textColor = .black
+        maxMinTempsLabel.font = .systemFont(ofSize: 24, weight: .medium)
         maxMinTempsLabel.textAlignment = .center
         addSubview(maxMinTempsLabel)
         
         weatherConditionImageView.translatesAutoresizingMaskIntoConstraints = false
-        weatherConditionImageView.image = AssetImage.whiteDayCloudy?.withTintColor(.black, renderingMode: .alwaysOriginal)
+        weatherConditionImageView.image = AssetImage.whiteDayCloudy?.withTintColor(.black, renderingMode: .alwaysTemplate)
         addSubview(weatherConditionImageView)
         
         
@@ -54,7 +60,7 @@ final class WeatherForecastByDayTableViewCellView: UIView {
             weekdayLabel.trailingAnchor.constraint(lessThanOrEqualTo: maxMinTempsLabel.leadingAnchor, constant: -16),
             
             weatherConditionImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            weatherConditionImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.75),
+            weatherConditionImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.6),
             weatherConditionImageView.widthAnchor.constraint(equalTo: weatherConditionImageView.heightAnchor),
             weatherConditionImageView.centerYAnchor.constraint(equalTo: centerYAnchor)
             
@@ -66,7 +72,12 @@ final class WeatherForecastByDayTableViewCellView: UIView {
     func setupByModel(weekday: String, maxMinTemps: String, condition: UIImage?) {
         weekdayLabel.text = weekday
         maxMinTempsLabel.text = maxMinTemps
-        weatherConditionImageView.image = condition
+        weatherConditionImageView.image = condition?.withTintColor(.black, renderingMode: .alwaysOriginal)
     }
     
+    func setupElementsStyle(isSelected: Bool) {
+        weekdayLabel.textColor = UIColor(named: isSelected ? "hex_5A9FF0" : "hex_000000")
+        maxMinTempsLabel.textColor = UIColor(named: isSelected ? "hex_5A9FF0" : "hex_000000")
+        weatherConditionImageView.image = weatherConditionImageView.image?.withTintColor(UIColor(named: isSelected ? "hex_5A9FF0" : "hex_000000") ?? .black) 
+    }
 }

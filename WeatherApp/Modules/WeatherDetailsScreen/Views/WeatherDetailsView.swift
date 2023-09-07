@@ -93,20 +93,29 @@ class WeatherDetailsView: UIView {
             weatherDetailsStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -16)
         ])
     }
+    
+    func config(from model: [Weather]) {
+        guard let date = model.first?.weekdayDate else { return }
+        setDate(date)
+    }
 
-    func setTemp(max: String, min: String) {
+    private func setTemp(max: String, min: String) {
         temperatureLabel.text = "\(max)˚/ \(min)˚"
         temperatureLabel.attachImage(AssetImage.temperature, atPosition: .beginning)
     }
     
-    func setHumidity(level: String) {
+    private func setHumidity(level: String) {
         humidityLabel.text = "\(level)%"
         humidityLabel.attachImage(AssetImage.humidity, atPosition: .beginning)
     }
     
-    func setWind(speed: String, direction: UIImage?) {
+    private func setWind(speed: String, direction: UIImage?) {
         windInfoLabel.text = "\(speed)m/s"
         windInfoLabel.attachImage(AssetImage.wind, atPosition: .beginning)
         windInfoLabel.attachImage(direction, atPosition: .end)
+    }
+    
+    private func setDate(_ date: String) {
+        dateLabel.text = date
     }
 }

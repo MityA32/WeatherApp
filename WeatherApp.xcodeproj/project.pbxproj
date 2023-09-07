@@ -30,6 +30,9 @@
 		93517F312AA7DAB700124014 /* WeatherForecastByDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93517F302AA7DAB700124014 /* WeatherForecastByDayTableViewCell.swift */; };
 		93517F332AA8C2F300124014 /* WeatherDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93517F322AA8C2F300124014 /* WeatherDetailsModel.swift */; };
 		93517F352AA8EEC200124014 /* WeatherForecastByDayTableViewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93517F342AA8EEC200124014 /* WeatherForecastByDayTableViewCellView.swift */; };
+		93517F382AA9349700124014 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 93517F372AA9349700124014 /* Collections */; };
+		93517F3A2AA9349700124014 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 93517F392AA9349700124014 /* DequeModule */; };
+		93517F3C2AA9349700124014 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 93517F3B2AA9349700124014 /* OrderedCollections */; };
 		9351B87F2AA4B4DB00D8EFAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9351B87E2AA4B4DB00D8EFAF /* AppDelegate.swift */; };
 		9351B8812AA4B4DB00D8EFAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9351B8802AA4B4DB00D8EFAF /* SceneDelegate.swift */; };
 		9351B8832AA4B4DB00D8EFAF /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9351B8822AA4B4DB00D8EFAF /* BaseViewController.swift */; };
@@ -77,7 +80,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93517F382AA9349700124014 /* Collections in Frameworks */,
 				4C0B17D5DC6A294E72853D98 /* Pods_WeatherApp.framework in Frameworks */,
+				93517F3C2AA9349700124014 /* OrderedCollections in Frameworks */,
+				93517F3A2AA9349700124014 /* DequeModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +322,11 @@
 			dependencies = (
 			);
 			name = WeatherApp;
+			packageProductDependencies = (
+				93517F372AA9349700124014 /* Collections */,
+				93517F392AA9349700124014 /* DequeModule */,
+				93517F3B2AA9349700124014 /* OrderedCollections */,
+			);
 			productName = WeatherApp;
 			productReference = 9351B87B2AA4B4DB00D8EFAF /* WeatherApp.app */;
 			productType = "com.apple.product-type.application";
@@ -344,6 +355,9 @@
 				Base,
 			);
 			mainGroup = 9351B8722AA4B4DB00D8EFAF;
+			packageReferences = (
+				93517F362AA9349700124014 /* XCRemoteSwiftPackageReference "swift-collections" */,
+			);
 			productRefGroup = 9351B87C2AA4B4DB00D8EFAF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -580,9 +594,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WeatherApp/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+                INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -609,7 +622,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WeatherApp/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -648,6 +661,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		93517F362AA9349700124014 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		93517F372AA9349700124014 /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 93517F362AA9349700124014 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+		93517F392AA9349700124014 /* DequeModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 93517F362AA9349700124014 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = DequeModule;
+		};
+		93517F3B2AA9349700124014 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 93517F362AA9349700124014 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9351B8732AA4B4DB00D8EFAF /* Project object */;
 }

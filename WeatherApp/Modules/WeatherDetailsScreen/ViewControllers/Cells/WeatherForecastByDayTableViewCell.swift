@@ -40,9 +40,32 @@ class WeatherForecastByDayTableViewCell: UITableViewCell {
         
     }
     
+    func setSelected(_ selected: Bool, animated: Bool, shadowColor: UIColor?) {
+        super.setSelected(selected, animated: animated)
+        cellView.setupElementsStyle(isSelected: selected)
+        contentView.layer.shadowOpacity = selected ? 0.25 : 0
+        contentView.layer.shadowRadius = selected ? 15.0 : 0
+        contentView.layer.shadowOffset = .zero
+        contentView.layer.shadowColor = selected ? (shadowColor ?? .blue).cgColor : UIColor.clear.cgColor
+        contentView.layer.masksToBounds = false
+
+    }
+    
     func findMostTimesCondition(by weatherData: [Weather]) -> UIImage? {
         var conditionCounts: [UIImage: Int] = [:]
-        for weather in weatherData {
+        
+        
+        let filteredWeatherData = weatherData.filter { weather in
+            print(weather.time)
+            if let hourString = weather.time.split(separator: ":").first,
+               let hour = Int(hourString),
+               hour >= 9 && hour <= 18 {
+                return true
+            }
+            return false
+        }
+        
+        for weather in filteredWeatherData {
             if let conditionImage = weather.condition {
                 if let count = conditionCounts[conditionImage] {
                     conditionCounts[conditionImage] = count + 1
@@ -51,15 +74,17 @@ class WeatherForecastByDayTableViewCell: UITableViewCell {
                 }
             }
         }
+        
         var mostStoredConditionImage: UIImage? = nil
         var maxCount = 0
-
+        
         for (conditionImage, count) in conditionCounts {
             if count > maxCount {
                 maxCount = count
                 mostStoredConditionImage = conditionImage
             }
         }
+        
         return mostStoredConditionImage
     }
 }

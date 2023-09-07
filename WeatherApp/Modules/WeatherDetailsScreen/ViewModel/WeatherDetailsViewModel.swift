@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxRelay
+import OrderedCollections
 
 final class WeatherDetailsViewModel {
     
@@ -14,7 +15,7 @@ final class WeatherDetailsViewModel {
     
     private let disposeBag = DisposeBag()
     let inCity = BehaviorRelay<String>(value: "Kyiv")
-    private let _outWeather = PublishRelay<[String : [Weather]]>()
+    private let _outWeather = PublishRelay<OrderedDictionary<String, [Weather]>>()
     private(set) lazy var outWeather = self._outWeather.asObservable()
     
     

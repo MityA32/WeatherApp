@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import OrderedCollections
 
 final class WeatherDetailsModel {
     
@@ -14,7 +15,7 @@ final class WeatherDetailsModel {
     
     private let disposeBag = DisposeBag()
     let inCity = PublishRelay<String>()
-    let outWeatherForecast = PublishRelay<[String: [Weather]]>()
+    let outWeatherForecast = PublishRelay<OrderedDictionary<String, [Weather]>>()
     
     init() {
         self.inCity
@@ -22,12 +23,15 @@ final class WeatherDetailsModel {
             .disposed(by: self.disposeBag)
         self.weatherProvider.outWeatherForecast
             .map { weatherData in
-                var groupedWeather: [String: [Weather]] = [:]
+                var groupedWeather: OrderedDictionary<String, [Weather]> = [:]
                 for weather in weatherData {
                     if var existingGroup = groupedWeather[weather.weekdayDate] {
                         existingGroup.append(weather)
                         groupedWeather[weather.weekdayDate] = existingGroup
                     } else {
+                        if groupedWeather.count >= 5 {
+                            break
+                        }
                         groupedWeather[weather.weekdayDate] = [weather]
                     }
                 }

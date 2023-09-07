@@ -12,3 +12,11 @@ extension Date {
         self.formatted(.dateTime.weekday(.abbreviated)).uppercased() + ", " + self.formatted(.dateTime.day(.twoDigits).month(.wide))
     }
 }
+
+extension Date {
+    func formattedTo24Hour() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH"
+        return formatter.string(from: self)
+    }
+}
