@@ -12,79 +12,39 @@ class WeatherForecastByDayTableViewCell: UITableViewCell {
     let cellView = WeatherForecastByDayTableViewCellView()
     
     static let id = "\(WeatherForecastByDayTableViewCell.self)"
-
+    
     func config(from model: [Weather]) {
         contentView.addSubview(cellView)
         guard let weekday = model.first?.weekdayDate.prefix(2) else { return }
-        var maxTemp = Int.min
-        var minTemp = Int.max
-
-        for weather in model {
-            if weather.temp > maxTemp {
-                maxTemp = weather.temp
-            }
-            if weather.temp < minTemp {
-                minTemp = weather.temp
-            }
-        }
+        let maxMinTemps = model.maxMinTemps
         cellView.setupByModel(
             weekday: String(weekday),
-            maxMinTemps: "\(maxTemp)˚ / \(minTemp)˚",
-            condition: findMostTimesCondition(by: model))
+            maxMinTemps: "\(maxMinTemps.0)˚ / \(maxMinTemps.1)˚",
+            condition: model.mostTimesConditionImage
+        )
         NSLayoutConstraint.activate([
             cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             cellView.topAnchor.constraint(equalTo: contentView.topAnchor),
             cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-        
-    }
-    
-    func setSelected(_ selected: Bool, animated: Bool, shadowColor: UIColor?) {
-        super.setSelected(selected, animated: animated)
-        cellView.setupElementsStyle(isSelected: selected)
-        contentView.layer.shadowOpacity = selected ? 0.25 : 0
-        contentView.layer.shadowRadius = selected ? 15.0 : 0
-        contentView.layer.shadowOffset = .zero
-        contentView.layer.shadowColor = selected ? (shadowColor ?? .blue).cgColor : UIColor.clear.cgColor
         contentView.layer.masksToBounds = false
-
+        selectionStyle = .none
     }
     
-    func findMostTimesCondition(by weatherData: [Weather]) -> UIImage? {
-        var conditionCounts: [UIImage: Int] = [:]
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
         
-        
-        let filteredWeatherData = weatherData.filter { weather in
-            print(weather.time)
-            if let hourString = weather.time.split(separator: ":").first,
-               let hour = Int(hourString),
-               hour >= 9 && hour <= 18 {
-                return true
-            }
-            return false
-        }
-        
-        for weather in filteredWeatherData {
-            if let conditionImage = weather.condition {
-                if let count = conditionCounts[conditionImage] {
-                    conditionCounts[conditionImage] = count + 1
-                } else {
-                    conditionCounts[conditionImage] = 1
-                }
-            }
-        }
-        
-        var mostStoredConditionImage: UIImage? = nil
-        var maxCount = 0
-        
-        for (conditionImage, count) in conditionCounts {
-            if count > maxCount {
-                maxCount = count
-                mostStoredConditionImage = conditionImage
-            }
-        }
-        
-        return mostStoredConditionImage
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        layer.masksToBounds = false
+        layer.shadowColor = (UIColor(named: "hex_5A9FF0") ?? .blue).cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 0)
+        layer.shadowRadius = 15
+        layer.shadowOpacity = 0
+        layer.shadowOpacity = selected ? 0.25 : 0
+        cellView.setupElementsStyle(isSelected: selected)
     }
 }

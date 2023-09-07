@@ -18,6 +18,7 @@ extension UILabel {
         let font = self.font ?? UIFont.systemFont(ofSize: 17)
         let baselineOffset = (font.capHeight - image.size.height).rounded() / 2
         imageAttachment.bounds = CGRect(x: 0, y: baselineOffset, width: image.size.width, height: image.size.height)
+        
         switch position {
             case .beginning:
                 attributedText.insert(attributedSpacing, at: 0)

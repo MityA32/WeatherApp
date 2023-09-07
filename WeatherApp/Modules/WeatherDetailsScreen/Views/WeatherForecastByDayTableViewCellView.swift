@@ -13,6 +13,8 @@ final class WeatherForecastByDayTableViewCellView: UIView {
     let maxMinTempsLabel = UILabel()
     let weatherConditionImageView = UIImageView()
     
+    var isSelected = false
+    
     init() {
         super.init(frame: .zero)
         setup()
@@ -21,6 +23,8 @@ final class WeatherForecastByDayTableViewCellView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
     
     private func setup() {
         translatesAutoresizingMaskIntoConstraints = false
@@ -80,4 +84,6 @@ final class WeatherForecastByDayTableViewCellView: UIView {
         maxMinTempsLabel.textColor = UIColor(named: isSelected ? "hex_5A9FF0" : "hex_000000")
         weatherConditionImageView.image = weatherConditionImageView.image?.withTintColor(UIColor(named: isSelected ? "hex_5A9FF0" : "hex_000000") ?? .black) 
     }
+    
+
 }

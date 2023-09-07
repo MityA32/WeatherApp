@@ -12,9 +12,12 @@ class WeatherDetailsView: UIView {
     private let dateLabel = UILabel()
     private let weatherImageView = UIImageView()
     private let weatherDetailsStackView = UIStackView()
-    private let temperatureLabel = UILabel()
-    private let humidityLabel = UILabel()
-    private let windInfoLabel = UILabel()
+    
+    private let temperatureView = WeatherDetailsElementView(type: .maxMinTemp)
+    
+    private let humidityView = WeatherDetailsElementView(type: .humidity)
+    
+    private let windInfoView = WeatherDetailsElementView(type: .wind)
     
     init() {
         super.init(frame: .zero)
@@ -56,7 +59,7 @@ class WeatherDetailsView: UIView {
         NSLayoutConstraint.activate([
             
             weatherImageView.trailingAnchor.constraint(equalTo: centerXAnchor, constant: -16),
-            weatherImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5),
+            weatherImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4),
             weatherImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.4),
             weatherImageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 20),
             weatherImageView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 16)
@@ -64,58 +67,57 @@ class WeatherDetailsView: UIView {
     }
     
     private func setupWeatherDetailsStackView() {
-        temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
-        temperatureLabel.text = "--˚/ --˚"
-        temperatureLabel.attachImage(AssetImage.temperature, atPosition: .beginning)
-        
-        humidityLabel.translatesAutoresizingMaskIntoConstraints = false
-        humidityLabel.text = "--%"
-        humidityLabel.attachImage(AssetImage.humidity, atPosition: .beginning)
-        
-        windInfoLabel.translatesAutoresizingMaskIntoConstraints = false
-        windInfoLabel.text = "--m/s"
-        windInfoLabel.attachImage(AssetImage.wind, atPosition: .beginning)
-        windInfoLabel.attachImage(AssetImage.windDirectionNorth, atPosition: .end)
-        
         weatherDetailsStackView.translatesAutoresizingMaskIntoConstraints = false
         weatherDetailsStackView.axis = .vertical
         weatherDetailsStackView.distribution = .fillEqually
-        weatherDetailsStackView.addArrangedSubview(temperatureLabel)
-        weatherDetailsStackView.addArrangedSubview(humidityLabel)
-        weatherDetailsStackView.addArrangedSubview(windInfoLabel)
+        weatherDetailsStackView.spacing = 8
+        weatherDetailsStackView.addArrangedSubview(temperatureView)
+        weatherDetailsStackView.addArrangedSubview(humidityView)
+        weatherDetailsStackView.addArrangedSubview(windInfoView)
         addSubview(weatherDetailsStackView)
         
         NSLayoutConstraint.activate([
             weatherDetailsStackView.leadingAnchor.constraint(equalTo: centerXAnchor, constant: 16),
             weatherDetailsStackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5),
-            weatherDetailsStackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.4),
+            weatherDetailsStackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.3),
             weatherDetailsStackView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 20),
             weatherDetailsStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -16)
         ])
     }
     
     func config(from model: [Weather]) {
-        guard let date = model.first?.weekdayDate else { return }
-        setDate(date)
+        
+        guard let currentWeather = model.first else { return }
+        let isToday = Date().formattedForWeatherDetails == currentWeather.weekdayDate
+        let maxMinTemps = model.maxMinTemps
+        setTemp(max: maxMinTemps.0, min: maxMinTemps.1)
+        setDate(currentWeather.weekdayDate)
+        setWeatherImage(isToday ? currentWeather.condition : model.mostTimesConditionImage)
+        setHumidity(level: isToday ? "\(currentWeather.humidity)" : model.avarageHumidity)
+        setWind(
+            speed: isToday ? "\(Int(currentWeather.windSpeed))" : model.avarageWindSpeed,
+            direction: isToday ? currentWeather.windDirection : model.mostFrequentWindDirection
+        )
     }
 
-    private func setTemp(max: String, min: String) {
-        temperatureLabel.text = "\(max)˚/ \(min)˚"
-        temperatureLabel.attachImage(AssetImage.temperature, atPosition: .beginning)
+    private func setTemp(max: Int, min: Int) {
+        temperatureView.setLabel(with: "\(max)˚/ \(min)˚")
     }
     
     private func setHumidity(level: String) {
-        humidityLabel.text = "\(level)%"
-        humidityLabel.attachImage(AssetImage.humidity, atPosition: .beginning)
+        humidityView.setLabel(with: "\(level)%")
     }
     
     private func setWind(speed: String, direction: UIImage?) {
-        windInfoLabel.text = "\(speed)m/s"
-        windInfoLabel.attachImage(AssetImage.wind, atPosition: .beginning)
-        windInfoLabel.attachImage(direction, atPosition: .end)
+        windInfoView.setLabel(with: "\(speed)m/s")
+        windInfoView.setTrailingImage(with: direction)
     }
     
     private func setDate(_ date: String) {
         dateLabel.text = date
+    }
+    
+    private func setWeatherImage(_ image: UIImage?) {
+        weatherImageView.image = image
     }
 }

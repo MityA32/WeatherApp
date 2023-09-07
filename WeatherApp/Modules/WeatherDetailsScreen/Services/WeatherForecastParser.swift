@@ -24,11 +24,11 @@ final class WeatherForecastParser: Parseable {
                     }
                 }
                 return Weather(
-                    weekdayDate: date.formattedForWeatherDetails ,
+                    weekdayDate: date.formattedForWeatherDetails,
                     time: date.formattedTo24Hour(),
                     temp: Int(weather.main.temp - 273),
-                    humidity: "\(weather.main.humidity)",
-                    windSpeed: "\(weather.wind.speed)",
+                    humidity: weather.main.humidity,
+                    windSpeed: weather.wind.speed,
                     windDirection: windDirectionImage,
                     condition: condition
                     

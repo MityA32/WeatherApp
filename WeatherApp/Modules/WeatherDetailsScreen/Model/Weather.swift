@@ -11,8 +11,8 @@ struct Weather {
     let weekdayDate: String
     let time: String
     let temp: Int
-    let humidity: String
-    let windSpeed: String
+    let humidity: Int
+    let windSpeed: Double
     let windDirection: UIImage?
     let condition: UIImage?
 }

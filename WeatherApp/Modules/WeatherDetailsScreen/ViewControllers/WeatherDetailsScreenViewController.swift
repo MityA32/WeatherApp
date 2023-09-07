@@ -21,7 +21,7 @@ class WeatherDetailsScreenViewController: UIViewController {
     private let viewModel = WeatherDetailsViewModel()
     private let disposeBag = DisposeBag()
     
-    var selectedIndexPaths = Set<IndexPath>()
+    private var selectedIndexPath: IndexPath?
     private let selectedWeatherData = BehaviorRelay<[Weather]?>(value: nil)
 
     
@@ -99,6 +99,7 @@ private extension WeatherDetailsScreenViewController {
         weatherForecastByDayTableView.register(WeatherForecastByDayTableViewCell.self, forCellReuseIdentifier: WeatherForecastByDayTableViewCell.id)
         weatherForecastByDayTableView.backgroundColor = UIColor(named: "hex_FFFFFF")
         weatherForecastByDayTableView.separatorStyle = .none
+        
 //        weatherForecastByDayTableView.rowHeight = UITableView.automaticDimension
         view.addSubview(weatherForecastByDayTableView)
         guard let weatherTempsByHoursCollectionView else { return }
@@ -119,45 +120,36 @@ private extension WeatherDetailsScreenViewController {
             .setDelegate(self)
             .disposed(by: disposeBag)
         viewModel.outWeather
-            .bind(to: weatherForecastByDayTableView.rx.items(cellIdentifier: WeatherForecastByDayTableViewCell.id, cellType: WeatherForecastByDayTableViewCell.self)) { index, model, cell in
+            .bind(to: weatherForecastByDayTableView.rx.items(cellIdentifier: WeatherForecastByDayTableViewCell.id, cellType: WeatherForecastByDayTableViewCell.self)) { [weak self] index, model, cell in
+                guard let self else { return }
                 cell.config(from: model.value)
+                let isSelected = index == self.selectedIndexPath?.row
+                cell.setSelected(isSelected, animated: false)
             }
             .disposed(by: disposeBag)
-        
-//        selectedWeatherData
-//               .asObservable()
-//               .subscribe(onNext: { [weak self] selectedWeather in
-//                   // Check if the selectedWeather is not nil
-//                   if let value = selectedWeather {
-//                       self?.generalDetailsView.config(from: value)
-//                   }
-//               })
-//               .disposed(by: disposeBag)
+        weatherForecastByDayTableView.rx
+            .itemSelected
+            .map { $0.row }
+            .bind(to: viewModel.inSelectedIndexOfDay)
+            .disposed(by: disposeBag)
+        viewModel.outWeatherForecastBySelectedDay
+            .bind(onNext: { [weak self] weatherData in
+                self?.generalDetailsView.config(from: weatherData ?? [])
+            })
+            .disposed(by: disposeBag)
     }
 }
 
 extension WeatherDetailsScreenViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        for section in 0..<tableView.numberOfSections {
-            for row in 0..<tableView.numberOfRows(inSection: section) {
-                let indexPathToDeselect = IndexPath(row: row, section: section)
-                if indexPathToDeselect != indexPath {
-                    guard let cell = tableView.cellForRow(at: indexPathToDeselect) as? WeatherForecastByDayTableViewCell else {
-                        return
-                    }
-                    cell.setSelected(false, animated: true, shadowColor: nil)
-
-                }
-            }
+        selectedIndexPath = indexPath
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableView.ScrollPosition.none)
+            viewModel.inSelectedIndexOfDay.accept(0)
         }
-        selectedIndexPaths = []
-        selectedIndexPaths.insert(indexPath)
-
-        // Update the cell's appearance
-        if let cell = tableView.cellForRow(at: indexPath) as? WeatherForecastByDayTableViewCell {
-            cell.setSelected(true, animated: true, shadowColor: UIColor(named: "hex_5A9FF0"))
-        }
-        
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
