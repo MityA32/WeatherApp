@@ -85,6 +85,7 @@ private extension WeatherDetailsScreenViewController {
         guard let collectionView = weatherTempsByHoursCollectionView else { return }
         collectionView.backgroundColor = UIColor(named: "hex_5A9FF0")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(WeatherTempsByHoursCollectionViewCell.self, forCellWithReuseIdentifier: WeatherTempsByHoursCollectionViewCell.id)
         view.addSubview(collectionView)
         
