@@ -14,7 +14,7 @@ final class WeatherDetailsViewModel {
     private let model = WeatherDetailsModel()
     
     private let disposeBag = DisposeBag()
-    let inCity = BehaviorRelay<String>(value: "Kyiv")
+    let inCity = BehaviorRelay<String>(value: "--")
     let inSelectedIndexOfDay = BehaviorRelay<Int>(value: 0)
     private let _outWeather = PublishRelay<OrderedDictionary<String, [Weather]>>()
     private(set) lazy var outWeather = self._outWeather.asObservable()
@@ -28,6 +28,7 @@ final class WeatherDetailsViewModel {
     
     private func setupRx() {
         inCity
+            .debug("inCityVM")
             .bind(to: model.inCity)
             .disposed(by: disposeBag)
         inSelectedIndexOfDay

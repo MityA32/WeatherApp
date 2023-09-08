@@ -96,7 +96,8 @@ class WeatherDetailsView: UIView {
         setHumidity(level: isToday ? "\(currentWeather.humidity)" : model.avarageHumidity)
         setWind(
             speed: isToday ? "\(Int(currentWeather.windSpeed))" : model.avarageWindSpeed,
-            direction: isToday ? currentWeather.windDirection : model.mostFrequentWindDirection
+            direction: WindDirection
+                .direction(forDegree: isToday ? currentWeather.windDirection : model.mostFrequentWindDirection)?.image
         )
     }
 

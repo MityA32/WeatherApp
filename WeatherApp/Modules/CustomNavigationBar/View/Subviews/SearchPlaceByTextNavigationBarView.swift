@@ -1,15 +1,14 @@
 //
-//  CustomNavigationNarView.swift
+//  SearchPlaceByTextNavigationBarView.swift
 //  WeatherApp
 //
-//  Created by Dmytro Hetman on 04.09.2023.
+//  Created by Dmytro Hetman on 08.09.2023.
 //
 
 import UIKit
 
-class CustomNavigationNarView: UIView {
-    
-    
+class SearchPlaceByTextNavigationBarView: UIView {
+
     init() {
         super.init(frame: .zero)
         setup()
@@ -19,9 +18,12 @@ class CustomNavigationNarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setup() {
+    func setup() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .systemPink
+        setupViews()
     }
     
+    func setupViews() {
+        
+    }
 }

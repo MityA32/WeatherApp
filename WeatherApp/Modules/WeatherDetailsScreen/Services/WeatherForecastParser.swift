@@ -12,10 +12,7 @@ final class WeatherForecastParser: Parseable {
         unparsedWeather.list
             .map { weather in
                 let date = Date(timeIntervalSince1970: TimeInterval(weather.date))
-                var windDirectionImage: UIImage?
-                WindDirection.allCases.forEach {
-                    if $0.degrees.contains(weather.wind.deg) { windDirectionImage = $0.image }
-                }
+                
                 var condition: UIImage?
                 
                 WeatherCondition.allCases.forEach {
@@ -29,7 +26,7 @@ final class WeatherForecastParser: Parseable {
                     temp: Int(weather.main.temp - 273),
                     humidity: weather.main.humidity,
                     windSpeed: weather.wind.speed,
-                    windDirection: windDirectionImage,
+                    windDirection: weather.wind.deg,
                     condition: condition
                     
                 )

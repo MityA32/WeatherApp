@@ -60,4 +60,13 @@ extension WindDirection {
             return UIImage(named: "icon_wind_nw")
         }
     }
+    
+    static func direction(forDegree degree: Int) -> WindDirection? {
+        for direction in WindDirection.allCases {
+            if direction.degrees.contains(degree) {
+                return direction
+            }
+        }
+        return nil
+    }
 }

@@ -18,10 +18,12 @@ final class WeatherDetailsModel {
     let inSelectedIndexOfDay = BehaviorRelay<Int>(value: 0)
     let outWeatherForecast = PublishRelay<OrderedDictionary<String, [Weather]>>()
     let outWeatherForecastBySelectedDay = PublishRelay<[Weather]>()
+
     
     
     init() {
         self.inCity
+            .debug("inCityModel")
             .bind(to: self.weatherProvider.inCity)
             .disposed(by: self.disposeBag)
         self.weatherProvider.outWeatherForecast

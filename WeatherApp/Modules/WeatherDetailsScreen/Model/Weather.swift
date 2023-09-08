@@ -13,6 +13,6 @@ struct Weather {
     let temp: Int
     let humidity: Int
     let windSpeed: Double
-    let windDirection: UIImage?
+    let windDirection: Int
     let condition: UIImage?
 }

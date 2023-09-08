@@ -44,31 +44,12 @@ extension Array where Element == Weather {
         return mostStoredConditionImage
     }
     
-    var mostFrequentWindDirection: UIImage? {
-        var windDirectionCounts: [UIImage: Int] = [:]
-
-        for weather in self {
-            if let windDirectionImage = weather.windDirection {
-                if let count = windDirectionCounts[windDirectionImage] {
-                    windDirectionCounts[windDirectionImage] = count + 1
-                } else {
-                    windDirectionCounts[windDirectionImage] = 1
-                }
-            }
+    var mostFrequentWindDirection: Int {
+        var avgDegree = 0
+        self.forEach {
+            avgDegree += $0.windDirection
         }
-
-        var mostFrequentDirectionImage: UIImage? = nil
-        var maxCount = 0
-
-        for (windDirectionImage, count) in windDirectionCounts {
-            if count > maxCount {
-                maxCount = count
-                mostFrequentDirectionImage = windDirectionImage
-            }
-        }
-
-        // If no wind direction data is available, return a default image
-        return mostFrequentDirectionImage
+        return avgDegree / self.count
     }
     
     var maxMinTemps: (Int, Int) {

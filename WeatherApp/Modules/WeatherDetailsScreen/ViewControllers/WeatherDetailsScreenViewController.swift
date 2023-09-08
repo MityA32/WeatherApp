@@ -8,12 +8,12 @@
 import UIKit
 import RxSwift
 import RxCocoa
-
+import CoreLocation
 
 class WeatherDetailsScreenViewController: UIViewController {
 
     private let aboveNavigationBarView = UIView()
-    private let customNavigationBarView = CustomNavigationNarView()
+    private let customNavigationBarView = CustomNavigationBarView(type: .weatherDetails)
     private let generalDetailsView = WeatherDetailsView()
     private let weatherForecastByDayTableView = UITableView()
     private var weatherTempsByHoursCollectionView: UICollectionView?
@@ -21,9 +21,9 @@ class WeatherDetailsScreenViewController: UIViewController {
     private let viewModel = WeatherDetailsViewModel()
     private let disposeBag = DisposeBag()
     
+    private let locationService = LocationService()
+    
     private var selectedIndexPath: IndexPath?
-    private let selectedWeatherData = BehaviorRelay<[Weather]?>(value: nil)
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +31,22 @@ class WeatherDetailsScreenViewController: UIViewController {
     }
     
     private func setup() {
+        setupLocationServices()
         setupViews()
         setupRx()
+    }
+}
+
+extension WeatherDetailsScreenViewController {
+    private func setupLocationServices() {
+        locationService.delegate = self
+        locationService.requestLocationAuth()
+    }
+}
+
+extension WeatherDetailsScreenViewController: LocationServiceDelegate {
+    func locationServiceDidUpdateCityName(cityName: String) {
+        viewModel.inCity.accept(cityName)
     }
 }
 
@@ -119,6 +133,10 @@ private extension WeatherDetailsScreenViewController {
 private extension WeatherDetailsScreenViewController {
     
     private func setupRx() {
+        guard let bar = customNavigationBarView.weatherDetailsNavigationBar else { return }
+        viewModel.inCity
+            .bind(to: bar.placeNameLabel.rx.text)
+            .disposed(by: disposeBag)
         weatherForecastByDayTableView.rx
             .setDelegate(self)
             .disposed(by: disposeBag)
