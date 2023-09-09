@@ -62,6 +62,7 @@ final class SearchByPlaceNameScreenViewController: UIViewController {
     
     private func setupSearchResultsTableView() {
         searchResultsTableView.translatesAutoresizingMaskIntoConstraints = false
+        searchResultsTableView.register(SearchResultsTableViewCell.self, forCellReuseIdentifier: SearchResultsTableViewCell.id)
         view.addSubview(searchResultsTableView)
         
         NSLayoutConstraint.activate([
@@ -79,6 +80,12 @@ extension SearchByPlaceNameScreenViewController {
         navBar.textField.rx.text
             .orEmpty
             .bind(to: viewModel.inPlaceName)
+            .disposed(by: disposeBag)
+        viewModel.outPlaceVariants
+            .bind(to: searchResultsTableView.rx.items(cellIdentifier: SearchResultsTableViewCell.id, cellType: SearchResultsTableViewCell.self)) {
+                index, model, cell in
+                cell.config(from: model)
+            }
             .disposed(by: disposeBag)
     }
 }

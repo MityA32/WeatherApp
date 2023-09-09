@@ -56,6 +56,7 @@
 		93B6040B2AAC008A00990165 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B6040A2AAC008A00990165 /* Place.swift */; };
 		93B6040D2AAC0D1C00990165 /* Reactive+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B6040C2AAC0D1C00990165 /* Reactive+Extension.swift */; };
 		93B6040F2AAC102700990165 /* RxMKLocalSearchCompleterDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B6040E2AAC102700990165 /* RxMKLocalSearchCompleterDelegateProxy.swift */; };
+		93B604122AAC13D100990165 /* SearchResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B604112AAC13D100990165 /* SearchResultsTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,6 +110,7 @@
 		93B6040A2AAC008A00990165 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		93B6040C2AAC0D1C00990165 /* Reactive+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+Extension.swift"; sourceTree = "<group>"; };
 		93B6040E2AAC102700990165 /* RxMKLocalSearchCompleterDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxMKLocalSearchCompleterDelegateProxy.swift; sourceTree = "<group>"; };
+		93B604112AAC13D100990165 /* SearchResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,6 +359,7 @@
 		93B603F92AABCCB700990165 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				93B604102AAC13B000990165 /* Cells */,
 				93B603FA2AABCE2B00990165 /* SearchByPlaceNameScreenViewController.swift */,
 			);
 			path = ViewController;
@@ -395,6 +398,14 @@
 				93B6040A2AAC008A00990165 /* Place.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		93B604102AAC13B000990165 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				93B604112AAC13D100990165 /* SearchResultsTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		B12A72688EE6FD039CC97C82 /* Pods */ = {
@@ -536,6 +547,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93B604122AAC13D100990165 /* SearchResultsTableViewCell.swift in Sources */,
 				93517F132AA69FE000124014 /* WeatherNetworkService.swift in Sources */,
 				93517F462AAA95A500124014 /* ScreenType.swift in Sources */,
 				93517F0D2AA6331A00124014 /* String+Extension.swift in Sources */,

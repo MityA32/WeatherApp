@@ -33,9 +33,12 @@ final class PlaceNamesProvider: NSObject {
             .disposed(by: disposeBag)
         
         searchCompleter.rx.didUpdateResults
-            .bind(onNext: {
-                print($0.results)
-            })
+            .map { completer in
+                completer.results.map {
+                    Place(city: $0.title, country: $0.subtitle)
+                }
+            }
+            .bind(to: outSearchResults)
             .disposed(by: disposeBag)
         
     }

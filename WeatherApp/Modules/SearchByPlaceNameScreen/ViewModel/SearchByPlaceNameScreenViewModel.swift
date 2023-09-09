@@ -28,10 +28,6 @@ final class SearchByPlaceNameScreenViewModel {
             .bind(to: placesProvider.inText)
             .disposed(by: disposeBag)
         placesProvider.outSearchResults
-            .map {
-                print($0)
-                return $0
-            }
             .bind(to: _outPlaceVariants)
             .disposed(by: disposeBag)
         
