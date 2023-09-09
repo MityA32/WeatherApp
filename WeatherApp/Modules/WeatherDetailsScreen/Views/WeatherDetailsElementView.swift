@@ -72,6 +72,7 @@ final class WeatherDetailsElementView: UIView {
         }
         label.font = .systemFont(ofSize: 20, weight: .medium)
         label.textAlignment = .left
+        label.textColor = .white
         addSubview(label)
         
         NSLayoutConstraint.activate([

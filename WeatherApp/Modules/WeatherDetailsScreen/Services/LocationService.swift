@@ -65,6 +65,3 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     }
 }
 
-protocol LocationServiceDelegate: AnyObject {
-    func locationServiceDidUpdateCityName(cityName: String)
-}

@@ -28,7 +28,6 @@ final class WeatherDetailsViewModel {
     
     private func setupRx() {
         inCity
-            .debug("inCityVM")
             .bind(to: model.inCity)
             .disposed(by: disposeBag)
         inSelectedIndexOfDay

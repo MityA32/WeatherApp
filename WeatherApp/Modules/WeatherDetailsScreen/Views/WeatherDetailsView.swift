@@ -14,9 +14,7 @@ class WeatherDetailsView: UIView {
     private let weatherDetailsStackView = UIStackView()
     
     private let temperatureView = WeatherDetailsElementView(type: .maxMinTemp)
-    
     private let humidityView = WeatherDetailsElementView(type: .humidity)
-    
     private let windInfoView = WeatherDetailsElementView(type: .wind)
     
     init() {
@@ -39,13 +37,14 @@ class WeatherDetailsView: UIView {
     private func setupDateLabel() {
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.text = Date().formattedForWeatherDetails
+        dateLabel.textColor = .white
         addSubview(dateLabel)
         
         NSLayoutConstraint.activate([
             dateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             dateLabel.heightAnchor.constraint(equalToConstant: 20),
-            dateLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.4),
+            dateLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8),
             dateLabel.bottomAnchor.constraint(lessThanOrEqualTo: weatherImageView.topAnchor, constant: 10)
         ])
     }

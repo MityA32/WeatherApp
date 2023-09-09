@@ -62,11 +62,6 @@ extension WindDirection {
     }
     
     static func direction(forDegree degree: Int) -> WindDirection? {
-        for direction in WindDirection.allCases {
-            if direction.degrees.contains(degree) {
-                return direction
-            }
-        }
-        return nil
+        WindDirection.allCases.first(where: { $0.degrees.contains(degree)})
     }
 }

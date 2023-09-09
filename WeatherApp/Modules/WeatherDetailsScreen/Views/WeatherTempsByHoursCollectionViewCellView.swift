@@ -40,6 +40,7 @@ final class WeatherTempsByHoursCollectionViewCellView: UIView {
         
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         temperatureLabel.text = "--º"
+        temperatureLabel.textColor = .white
         temperatureLabel.font = .systemFont(ofSize: 20, weight: .medium)
         temperatureLabel.adjustsFontSizeToFitWidth = true
         temperatureLabel.textAlignment = .center

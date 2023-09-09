@@ -24,7 +24,7 @@ enum AssetImage {
     static let wind = "ic_wind".image
     static let myLocation = "ic_my_location".image
     static let place = "ic_place".image
-//    static let windDirectionNorth = "icon_wind_n".image
+    static let back = "ic_back".image
 }
 
 enum Const {

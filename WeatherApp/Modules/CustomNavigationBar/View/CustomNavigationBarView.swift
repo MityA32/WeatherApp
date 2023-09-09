@@ -12,6 +12,18 @@ class CustomNavigationBarView: UIView {
     var weatherDetailsNavigationBar: WeatherDetailsNavigationBarView?
     var searchPlaceByTextNavigationBar: SearchPlaceByTextNavigationBarView?
     var searchPlaceByMapNavigationBar: SearchPlaceByMapNavigationBarView?
+    weak var delegateToSearchByPlaceName: NavigateToSearchByPlaceNameScreenDelegate? {
+        didSet {
+            weatherDetailsNavigationBar?.delegate = delegateToSearchByPlaceName
+        }
+    }
+    
+    weak var delegatePopViewController: PopViewControllerDelegate? {
+        didSet {
+            searchPlaceByTextNavigationBar?.delegate = delegatePopViewController
+        }
+    }
+    
     
     let type: ScreenType
     
@@ -55,14 +67,24 @@ class CustomNavigationBarView: UIView {
         searchPlaceByTextNavigationBar = SearchPlaceByTextNavigationBarView()
         guard let searchPlaceByTextNavigationBar else { return }
         addSubview(searchPlaceByTextNavigationBar)
+        NSLayoutConstraint.activate([
+            searchPlaceByTextNavigationBar.leadingAnchor.constraint(equalTo: leadingAnchor),
+            searchPlaceByTextNavigationBar.topAnchor.constraint(equalTo: topAnchor),
+            searchPlaceByTextNavigationBar.trailingAnchor.constraint(equalTo: trailingAnchor),
+            searchPlaceByTextNavigationBar.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
     }
     
     private func setupSearchPlaceByMap() {
         searchPlaceByMapNavigationBar = SearchPlaceByMapNavigationBarView()
         guard let searchPlaceByMapNavigationBar else { return }
         addSubview(searchPlaceByMapNavigationBar)
+        NSLayoutConstraint.activate([
+            searchPlaceByMapNavigationBar.leadingAnchor.constraint(equalTo: leadingAnchor),
+            searchPlaceByMapNavigationBar.topAnchor.constraint(equalTo: topAnchor),
+            searchPlaceByMapNavigationBar.trailingAnchor.constraint(equalTo: trailingAnchor),
+            searchPlaceByMapNavigationBar.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+        
     }
-    
 }
-
-

@@ -12,6 +12,7 @@ class WeatherDetailsNavigationBarView: UIView {
     let placeImageView = UIImageView()
     var placeNameLabel = UILabel()
     let myLocationImageView = UIImageView()
+    weak var delegate: NavigateToSearchByPlaceNameScreenDelegate?
     
     init() {
         super.init(frame: .zero)
@@ -25,6 +26,9 @@ class WeatherDetailsNavigationBarView: UIView {
     func setup() {
         translatesAutoresizingMaskIntoConstraints = false
         setupViews()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(placeNameLabelTapped))
+        placeNameLabel.isUserInteractionEnabled = true
+        placeNameLabel.addGestureRecognizer(tapGesture)
     }
     
     func setupViews() {
@@ -35,6 +39,7 @@ class WeatherDetailsNavigationBarView: UIView {
         addSubview(placeImageView)
         placeNameLabel.translatesAutoresizingMaskIntoConstraints = false
         placeNameLabel.text = "--"
+        placeNameLabel.textColor = .white
         addSubview(placeNameLabel)
         myLocationImageView.translatesAutoresizingMaskIntoConstraints = false
         myLocationImageView.image = AssetImage.myLocation
@@ -60,5 +65,7 @@ class WeatherDetailsNavigationBarView: UIView {
         ])
     }
     
-
+    @objc func placeNameLabelTapped() {
+        delegate?.pushToSearchByPlaceNameScreen()
+    }
 }

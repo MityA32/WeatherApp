@@ -7,19 +7,16 @@
 
 import UIKit
 
-final class WeatherForecastParser: Parseable {
+final class WeatherForecastParser: WeatherParseable {
     func parseWeather(_ unparsedWeather: WeatherForecastList) -> [Weather] {
         unparsedWeather.list
             .map { weather in
                 let date = Date(timeIntervalSince1970: TimeInterval(weather.date))
+                let descriptionMain = weather.weather.first?.main ?? ""
+                let condition = WeatherCondition.allCases
+                    .first(where: { $0.main.contains(descriptionMain) })
+                    .flatMap({isNight(date: weather.date) ? $0.nightImage : $0.image})
                 
-                var condition: UIImage?
-                
-                WeatherCondition.allCases.forEach {
-                    if $0.main.contains(weather.weather.first?.main ?? "") {
-                        condition = isNight(date: weather.date) ? $0.nightImage : $0.image
-                    }
-                }
                 return Weather(
                     weekdayDate: date.formattedForWeatherDetails,
                     time: date.formattedTo24Hour(),

@@ -12,12 +12,12 @@ final class WeatherForecastProvider {
     
     private let disposeBag = DisposeBag()
     private let weatherFetcher: Fetchable
-    private let weatherParser: Parseable
+    private let weatherParser: WeatherParseable
     
     let inCity = PublishRelay<String>()
     let outWeatherForecast = PublishRelay<[Weather]>()
     
-    init(fetcher: Fetchable, parser: Parseable) {
+    init(fetcher: Fetchable, parser: WeatherParseable) {
         self.weatherFetcher = fetcher
         self.weatherParser = parser
         setupRx()
@@ -25,7 +25,6 @@ final class WeatherForecastProvider {
     
     private func setupRx() {
         inCity
-            .debug("inCityProvider")
             .flatMap { [weak self] cityName -> Single<WeatherForecastList> in
                 guard let self = self,
                       let cityNameEncoded = cityName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
@@ -33,11 +32,11 @@ final class WeatherForecastProvider {
                 else { return Single.error(NSError(domain: "Invalid URL", code: 0, userInfo: nil)) }
                 return self.weatherFetcher.fetchWeather(from: url)
                     .catch { error in
-                       return Single.just(WeatherForecastList(list: [], city: WeatherCity(name: "--")))
+                       Single.just(WeatherForecastList(list: [], city: WeatherCity(name: "--")))
                    }
             }
             .map { [weak self] weatherForecast -> [Weather] in
-                return self?.weatherParser.parseWeather(weatherForecast) ?? []
+                self?.weatherParser.parseWeather(weatherForecast) ?? []
             }
             .bind(to: outWeatherForecast)
             .disposed(by: disposeBag)

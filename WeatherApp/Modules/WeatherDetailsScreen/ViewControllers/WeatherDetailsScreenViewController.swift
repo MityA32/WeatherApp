@@ -22,7 +22,6 @@ class WeatherDetailsScreenViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     private let locationService = LocationService()
-    
     private var selectedIndexPath: IndexPath?
     
     override func viewDidLoad() {
@@ -63,6 +62,7 @@ private extension WeatherDetailsScreenViewController {
         aboveNavigationBarView.backgroundColor = UIColor(named: "hex_4A90E2")
         view.addSubview(aboveNavigationBarView)
         
+        customNavigationBarView.delegateToSearchByPlaceName = self
         view.addSubview(customNavigationBarView)
         
         NSLayoutConstraint.activate([
@@ -181,5 +181,13 @@ extension WeatherDetailsScreenViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
+    }
+}
+
+extension WeatherDetailsScreenViewController: NavigateToSearchByPlaceNameScreenDelegate {
+    func pushToSearchByPlaceNameScreen() {
+        let searchByPlaceNameViewController = SearchByPlaceNameScreenViewController()
+        navigationController?.pushViewController(searchByPlaceNameViewController, animated: true)
+        
     }
 }

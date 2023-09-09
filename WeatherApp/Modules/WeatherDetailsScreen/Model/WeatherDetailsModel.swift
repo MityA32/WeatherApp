@@ -23,7 +23,6 @@ final class WeatherDetailsModel {
     
     init() {
         self.inCity
-            .debug("inCityModel")
             .bind(to: self.weatherProvider.inCity)
             .disposed(by: self.disposeBag)
         self.weatherProvider.outWeatherForecast
