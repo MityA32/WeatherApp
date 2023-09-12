@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeatherTempsByHoursCollectionViewCell: UICollectionViewCell {
+final class WeatherTempsByHoursCollectionViewCell: UICollectionViewCell {
     
     static let id = "\(WeatherTempsByHoursCollectionViewCell.self)"
     

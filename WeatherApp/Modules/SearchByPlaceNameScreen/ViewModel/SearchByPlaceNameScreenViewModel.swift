@@ -15,7 +15,7 @@ final class SearchByPlaceNameScreenViewModel {
     private let placesProvider = PlaceNamesProvider()
     private let disposeBag = DisposeBag()
     let inPlaceName = PublishRelay<String>()
-    private let _outPlaceVariants = PublishRelay<[Place]>()
+    private let _outPlaceVariants = PublishRelay<Set<Place>>()
     private(set) lazy var outPlaceVariants = _outPlaceVariants.asObservable()
     
     
@@ -30,6 +30,5 @@ final class SearchByPlaceNameScreenViewModel {
         placesProvider.outSearchResults
             .bind(to: _outPlaceVariants)
             .disposed(by: disposeBag)
-        
     }
 }

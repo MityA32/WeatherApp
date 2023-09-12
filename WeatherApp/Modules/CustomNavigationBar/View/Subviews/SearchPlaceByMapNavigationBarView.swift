@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchPlaceByMapNavigationBarView: UIView {
+final class SearchPlaceByMapNavigationBarView: UIView {
 
     init() {
         super.init(frame: .zero)

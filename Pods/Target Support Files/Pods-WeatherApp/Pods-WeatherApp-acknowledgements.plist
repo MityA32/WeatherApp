@@ -14,6 +14,16 @@
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Copyright 2023 Google</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>GooglePlaces</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>**The MIT License**
 **Copyright © 2015 Krunoslav Zaher, Shai Mishali**
 **All rights reserved.**

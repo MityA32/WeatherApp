@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Place {
+struct Place: Hashable {
     let city: String
     let country: String
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeatherForecastByDayTableViewCell: UITableViewCell {
+final class WeatherForecastByDayTableViewCell: UITableViewCell {
 
     let cellView = WeatherForecastByDayTableViewCellView()
     

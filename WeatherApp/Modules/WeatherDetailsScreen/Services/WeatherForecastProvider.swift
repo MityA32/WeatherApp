@@ -25,6 +25,7 @@ final class WeatherForecastProvider {
     
     private func setupRx() {
         inCity
+            .throttle(.milliseconds(200), latest: false, scheduler: MainScheduler.asyncInstance)
             .flatMap { [weak self] cityName -> Single<WeatherForecastList> in
                 guard let self = self,
                       let cityNameEncoded = cityName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeatherDetailsNavigationBarView: UIView {
+final class WeatherDetailsNavigationBarView: UIView {
     
     let placeImageView = UIImageView()
     var placeNameLabel = UILabel()

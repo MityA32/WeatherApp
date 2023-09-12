@@ -54,8 +54,6 @@
 		93B604062AABFD2600990165 /* LocationServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B604052AABFD2600990165 /* LocationServiceDelegate.swift */; };
 		93B604082AABFD3700990165 /* PopViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B604072AABFD3700990165 /* PopViewControllerDelegate.swift */; };
 		93B6040B2AAC008A00990165 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B6040A2AAC008A00990165 /* Place.swift */; };
-		93B6040D2AAC0D1C00990165 /* Reactive+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B6040C2AAC0D1C00990165 /* Reactive+Extension.swift */; };
-		93B6040F2AAC102700990165 /* RxMKLocalSearchCompleterDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B6040E2AAC102700990165 /* RxMKLocalSearchCompleterDelegateProxy.swift */; };
 		93B604122AAC13D100990165 /* SearchResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B604112AAC13D100990165 /* SearchResultsTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -108,8 +106,6 @@
 		93B604052AABFD2600990165 /* LocationServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceDelegate.swift; sourceTree = "<group>"; };
 		93B604072AABFD3700990165 /* PopViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopViewControllerDelegate.swift; sourceTree = "<group>"; };
 		93B6040A2AAC008A00990165 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
-		93B6040C2AAC0D1C00990165 /* Reactive+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+Extension.swift"; sourceTree = "<group>"; };
-		93B6040E2AAC102700990165 /* RxMKLocalSearchCompleterDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxMKLocalSearchCompleterDelegateProxy.swift; sourceTree = "<group>"; };
 		93B604112AAC13D100990165 /* SearchResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -250,7 +246,6 @@
 				93517F0C2AA6331A00124014 /* String+Extension.swift */,
 				93517F1C2AA780EF00124014 /* Date+Extension.swift */,
 				93517F3F2AAA3B7700124014 /* Array+Extension.swift */,
-				93B6040C2AAC0D1C00990165 /* Reactive+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -387,7 +382,6 @@
 				93B604022AABFCEC00990165 /* NavigateToSearchByPlaceNameScreenDelegate.swift */,
 				93B604052AABFD2600990165 /* LocationServiceDelegate.swift */,
 				93B604072AABFD3700990165 /* PopViewControllerDelegate.swift */,
-				93B6040E2AAC102700990165 /* RxMKLocalSearchCompleterDelegateProxy.swift */,
 			);
 			path = Delegates;
 			sourceTree = "<group>";
@@ -437,6 +431,7 @@
 				9351B8782AA4B4DB00D8EFAF /* Frameworks */,
 				9351B8792AA4B4DB00D8EFAF /* Resources */,
 				BE61903211CF30D17E726D4B /* [CP] Embed Pods Frameworks */,
+				05BB73F13E201E45D214F99A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -501,6 +496,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		05BB73F13E201E45D214F99A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WeatherApp/Pods-WeatherApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WeatherApp/Pods-WeatherApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WeatherApp/Pods-WeatherApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		43B6C68860D354BC692B45CF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -579,14 +591,12 @@
 				93B603FE2AABD53600990165 /* SearchByPlaceNameScreenViewModel.swift in Sources */,
 				93517F312AA7DAB700124014 /* WeatherForecastByDayTableViewCell.swift in Sources */,
 				9351B8812AA4B4DB00D8EFAF /* SceneDelegate.swift in Sources */,
-				93B6040F2AAC102700990165 /* RxMKLocalSearchCompleterDelegateProxy.swift in Sources */,
 				93517F222AA78A0700124014 /* Fetchable.swift in Sources */,
 				93517F402AAA3B7700124014 /* Array+Extension.swift in Sources */,
 				93517F172AA7751300124014 /* WeatherModel.swift in Sources */,
 				93517F0F2AA66E9000124014 /* Constants.swift in Sources */,
 				93517F2D2AA7BAF300124014 /* CustomURL.swift in Sources */,
 				93517F352AA8EEC200124014 /* WeatherForecastByDayTableViewCellView.swift in Sources */,
-				93B6040D2AAC0D1C00990165 /* Reactive+Extension.swift in Sources */,
 				93517F4B2AAA9BB400124014 /* SearchPlaceByTextNavigationBarView.swift in Sources */,
 				93B6040B2AAC008A00990165 /* Place.swift in Sources */,
 				93517F4F2AAAB45900124014 /* LocationService.swift in Sources */,

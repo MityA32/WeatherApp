@@ -16,11 +16,17 @@ final class SearchByPlaceNameScreenViewController: UIViewController {
     private let searchResultsTableView = UITableView()
     
     private let viewModel = SearchByPlaceNameScreenViewModel()
-    private let disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
+    
+    let onSelectCity = PublishRelay<String>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+    }
+    
+    deinit {
+        print("lox vc")
     }
     
     private func setup() {
@@ -63,6 +69,8 @@ final class SearchByPlaceNameScreenViewController: UIViewController {
     private func setupSearchResultsTableView() {
         searchResultsTableView.translatesAutoresizingMaskIntoConstraints = false
         searchResultsTableView.register(SearchResultsTableViewCell.self, forCellReuseIdentifier: SearchResultsTableViewCell.id)
+        searchResultsTableView.backgroundColor = .white
+        searchResultsTableView.rowHeight = 60
         view.addSubview(searchResultsTableView)
         
         NSLayoutConstraint.activate([
@@ -86,6 +94,15 @@ extension SearchByPlaceNameScreenViewController {
                 index, model, cell in
                 cell.config(from: model)
             }
+            .disposed(by: disposeBag)
+        searchResultsTableView.rx.itemSelected
+            .withLatestFrom(viewModel.outPlaceVariants) { indexPath, places in
+                (indexPath, Array(places))
+            }
+            .map {
+                $1[$0.row].city
+            }
+            .bind(to: onSelectCity)
             .disposed(by: disposeBag)
     }
 }

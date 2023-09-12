@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import CoreLocation
 
-class WeatherDetailsScreenViewController: UIViewController {
+final class WeatherDetailsScreenViewController: UIViewController {
 
     private let aboveNavigationBarView = UIView()
     private let customNavigationBarView = CustomNavigationBarView(type: .weatherDetails)
@@ -22,7 +22,6 @@ class WeatherDetailsScreenViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     private let locationService = LocationService()
-    private var selectedIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,11 +140,10 @@ private extension WeatherDetailsScreenViewController {
             .setDelegate(self)
             .disposed(by: disposeBag)
         viewModel.outWeather
-            .bind(to: weatherForecastByDayTableView.rx.items(cellIdentifier: WeatherForecastByDayTableViewCell.id, cellType: WeatherForecastByDayTableViewCell.self)) { [weak self] index, model, cell in
-                guard let self else { return }
+            .bind(to: weatherForecastByDayTableView.rx.items(
+                cellIdentifier: WeatherForecastByDayTableViewCell.id,
+                cellType: WeatherForecastByDayTableViewCell.self)) { index, model, cell in
                 cell.config(from: model.value)
-                let isSelected = index == self.selectedIndexPath?.row
-                cell.setSelected(isSelected, animated: false)
             }
             .disposed(by: disposeBag)
         weatherForecastByDayTableView.rx
@@ -164,14 +162,11 @@ private extension WeatherDetailsScreenViewController {
                 cell.config(from: model)
             }
             .disposed(by: disposeBag)
+        
     }
 }
 
 extension WeatherDetailsScreenViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedIndexPath = indexPath
-    }
-    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableView.ScrollPosition.none)
@@ -187,7 +182,12 @@ extension WeatherDetailsScreenViewController: UITableViewDelegate {
 extension WeatherDetailsScreenViewController: NavigateToSearchByPlaceNameScreenDelegate {
     func pushToSearchByPlaceNameScreen() {
         let searchByPlaceNameViewController = SearchByPlaceNameScreenViewController()
+        searchByPlaceNameViewController.onSelectCity
+            .do(onNext: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .bind(to: viewModel.inCity)
+            .disposed(by: searchByPlaceNameViewController.disposeBag)
         navigationController?.pushViewController(searchByPlaceNameViewController, animated: true)
-        
     }
 }

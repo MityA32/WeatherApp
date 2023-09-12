@@ -41,14 +41,15 @@ extension Array where Element == Weather {
         }
         
         guard let mostStoredConditionImage else { return AssetImage.whiteDayCloudy }
+        
         return mostStoredConditionImage
     }
     
     var mostFrequentWindDirection: Int {
-        var avgDegree = 0
-        self.forEach {
-            avgDegree += $0.windDirection
-        }
+        let count = self.count
+        guard count != 0 else { return 0 }
+        var avgDegree = self.reduce(.zero, { $0 + $1.windDirection})
+        
         return avgDegree / self.count
     }
     
@@ -64,22 +65,25 @@ extension Array where Element == Weather {
                 minTemp = weather.temp
             }
         }
+        
         return (maxTemp, minTemp)
     }
     
     var avarageHumidity: String {
-        var humidity = 0.0
-        self.forEach {
-            humidity += Double($0.humidity)
-        }
-        return "\(Int(humidity / Double(self.count)))"
+        let count = self.count
+        guard count != 0 else { return "" }
+        
+        let humidity = self.reduce(.zero, { $0 + $1.humidity })
+        
+        return "\(Int(Double(humidity) / Double(count)))"
     }
     
     var avarageWindSpeed: String {
-        var speed = 0.0
-        self.forEach {
-            speed += $0.windSpeed
-        }
+        let count = self.count
+        guard count != 0 else { return "" }
+        
+        let speed = self.reduce(.zero, { $0 + $1.windSpeed })
+        
         return "\(Int(speed / Double(self.count)))"
     }
 }

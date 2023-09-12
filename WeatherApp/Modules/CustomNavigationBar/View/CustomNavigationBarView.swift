@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomNavigationBarView: UIView {
+final class CustomNavigationBarView: UIView {
     
     var weatherDetailsNavigationBar: WeatherDetailsNavigationBarView?
     var searchPlaceByTextNavigationBar: SearchPlaceByTextNavigationBarView?

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchPlaceByTextNavigationBarView: UIView {
+final class SearchPlaceByTextNavigationBarView: UIView {
 
     let backButtonImageView = UIImageView()
     let textField = UITextField()
