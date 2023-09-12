@@ -28,8 +28,7 @@ final class PlaceNamesProvider: NSObject {
         placesClient = GMSPlacesClient.shared()
         setupRx()
     }
-    
-    
+
     private func setupRx() {
         inText
             .flatMapLatest { [unowned self] query -> Observable<Set<Place>> in
@@ -65,46 +64,3 @@ final class PlaceNamesProvider: NSObject {
         }
     }
 }
-
-
-
-
-
-
-//    func mapItems(for searchRequest: MKLocalSearch) -> Observable<Set<Place>> {
-//        Observable.create { observer in
-//            searchRequest.start(completionHandler: { (response, error) in
-//                print("inrequest")
-//                if let error = error {
-//                    print(error.localizedDescription)
-//                    observer.onError(error)
-//                } else {
-//                    print("111")
-//                    print(response?.mapItems)
-//                    let items = response?.mapItems
-//                        .compactMap {
-//                            Place(city: $0.placemark.locality ?? "", country: $0.placemark.country ?? "")
-//                        }
-//
-//                    observer.onNext(Set(items ?? []))
-//                    observer.onCompleted()
-//                }
-//            })
-//
-//            return Disposables.create {
-//                searchRequest.cancel()
-//            }
-//        }
-//    }
-
-
-
-
-    
-
-
-
-
-
-
-

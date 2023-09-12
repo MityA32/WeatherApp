@@ -42,23 +42,20 @@ final class WeatherForecastByDayTableViewCell: UITableViewCell {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         setupLayer()
-        layer.shadowOpacity = 0.25
-        
     }
     
-    
-    
     func setupLayer() {
-        
         layer.masksToBounds = false
         layer.shadowColor = (UIColor(named: "hex_5A9FF0") ?? .blue).cgColor
         layer.shadowOffset = .zero
         layer.shadowRadius = 15
-//        cellView.setupElementsStyle(isSelected: false)
+        layer.shadowOpacity = 0.25
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        backgroundColor = selected ? .white : .clear
+        contentView.backgroundColor = selected ? .white : .clear
         layer.shadowOpacity = selected ? 0.25 : 0
         cellView.setupElementsStyle(isSelected: selected)
     }
