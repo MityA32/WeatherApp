@@ -28,7 +28,7 @@ final class WeatherForecastByDayTableViewCellView: UIView {
     
     private func setup() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .white
+        backgroundColor = .clear
         setupSubviews()
     }
     

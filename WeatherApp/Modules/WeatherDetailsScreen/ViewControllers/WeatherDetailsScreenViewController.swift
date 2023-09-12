@@ -17,12 +17,20 @@ final class WeatherDetailsScreenViewController: UIViewController {
     private let generalDetailsView = WeatherDetailsView()
     private let weatherForecastByDayTableView = UITableView()
     private var weatherTempsByHoursCollectionView: UICollectionView?
+    private var collectionViewLayoutForReuse: UICollectionViewFlowLayout {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.itemSize = CGSize(width: (weatherTempsByHoursCollectionView?.frame.width ?? 40) / 5, height: (weatherTempsByHoursCollectionView?.frame.height ?? 40))
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumInteritemSpacing = 0.0
+        return flowLayout
+    }
     
     private let viewModel = WeatherDetailsViewModel()
     private let disposeBag = DisposeBag()
     
     private let locationService = LocationService()
-    
+    private var commonConstraints: [NSLayoutConstraint] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -31,6 +39,9 @@ final class WeatherDetailsScreenViewController: UIViewController {
     private func setup() {
         setupLocationServices()
         setupViews()
+        
+        commonConstraints = setupedConstraints(isVertical: true)
+        NSLayoutConstraint.activate(commonConstraints)
         setupRx()
     }
 }
@@ -48,7 +59,31 @@ extension WeatherDetailsScreenViewController: LocationServiceDelegate {
     }
 }
 
-private extension WeatherDetailsScreenViewController {
+extension WeatherDetailsScreenViewController {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            guard let self else { return }
+            let isVertical = self.traitCollection.verticalSizeClass == .compact
+            self.updateConstraintsForSizeClass(isVertical: isVertical)
+            self.view.layoutIfNeeded()
+            weatherTempsByHoursCollectionView?.collectionViewLayout = self.collectionViewLayoutForReuse
+        }, completion: nil)
+    }
+
+    private func updateConstraintsForSizeClass(isVertical: Bool) {
+        NSLayoutConstraint.deactivate(commonConstraints)
+        if isVertical {
+            commonConstraints = setupedConstraints(isVertical: false)
+            
+        } else {
+            commonConstraints = setupedConstraints(isVertical: true)
+        }
+
+        NSLayoutConstraint.activate(commonConstraints)
+    }
+    
     private func setupViews() {
         setupCustomNavigationNar()
         setupWeatherDetails()
@@ -63,29 +98,10 @@ private extension WeatherDetailsScreenViewController {
         
         customNavigationBarView.delegateToSearchByPlaceName = self
         view.addSubview(customNavigationBarView)
-        
-        NSLayoutConstraint.activate([
-            aboveNavigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
-            aboveNavigationBarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            aboveNavigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            aboveNavigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            customNavigationBarView.topAnchor.constraint(equalTo: aboveNavigationBarView.bottomAnchor),
-            customNavigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            customNavigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            customNavigationBarView.heightAnchor.constraint(equalToConstant: 44)
-        ])
     }
     
     private func setupWeatherDetails() {
         view.addSubview(generalDetailsView)
-        
-        NSLayoutConstraint.activate([
-            generalDetailsView.topAnchor.constraint(equalTo: customNavigationBarView.bottomAnchor),
-            generalDetailsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            generalDetailsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            generalDetailsView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3)
-        ])
     }
     
     private func setupWeatherTempsByHoursCollectionView() {
@@ -95,36 +111,54 @@ private extension WeatherDetailsScreenViewController {
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumInteritemSpacing = 0.0
         weatherTempsByHoursCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        guard let collectionView = weatherTempsByHoursCollectionView else { return }
-        collectionView.backgroundColor = UIColor(named: "hex_5A9FF0")
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(WeatherTempsByHoursCollectionViewCell.self, forCellWithReuseIdentifier: WeatherTempsByHoursCollectionViewCell.id)
-        view.addSubview(collectionView)
+        weatherTempsByHoursCollectionView?.backgroundColor = UIColor(named: "hex_5A9FF0")
+        weatherTempsByHoursCollectionView?.translatesAutoresizingMaskIntoConstraints = false
+        weatherTempsByHoursCollectionView?.showsHorizontalScrollIndicator = false
+        weatherTempsByHoursCollectionView?.register(WeatherTempsByHoursCollectionViewCell.self, forCellWithReuseIdentifier: WeatherTempsByHoursCollectionViewCell.id)
         
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: generalDetailsView.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.15)
-        ])
+        guard let weatherTempsByHoursCollectionView else { return }
+        weatherTempsByHoursCollectionView.layoutIfNeeded()
+        view.addSubview(weatherTempsByHoursCollectionView)
     }
     
     
     private func setupWeatherForecastByDayTableView() {
         weatherForecastByDayTableView.translatesAutoresizingMaskIntoConstraints = false
         weatherForecastByDayTableView.register(WeatherForecastByDayTableViewCell.self, forCellReuseIdentifier: WeatherForecastByDayTableViewCell.id)
-        weatherForecastByDayTableView.backgroundColor = UIColor(named: "hex_FFFFFF")
         weatherForecastByDayTableView.separatorStyle = .none
-        
+        weatherForecastByDayTableView.rowHeight = UITableView.automaticDimension
         view.addSubview(weatherForecastByDayTableView)
-        guard let weatherTempsByHoursCollectionView else { return }
-        NSLayoutConstraint.activate([
+        
+    }
+    
+    private func setupedConstraints(isVertical: Bool) -> [NSLayoutConstraint] {
+        guard let collectionView = weatherTempsByHoursCollectionView else { return [] }
+       return [
+            aboveNavigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
+            aboveNavigationBarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            aboveNavigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            aboveNavigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            customNavigationBarView.topAnchor.constraint(equalTo: isVertical ? aboveNavigationBarView.bottomAnchor : view.safeAreaLayoutGuide.topAnchor),
+            customNavigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            customNavigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            customNavigationBarView.heightAnchor.constraint(equalToConstant: 44),
+
+            generalDetailsView.topAnchor.constraint(equalTo: customNavigationBarView.bottomAnchor),
+            generalDetailsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            generalDetailsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            generalDetailsView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: isVertical ? 0.3 : 0.35),
+
+            collectionView.topAnchor.constraint(equalTo: generalDetailsView.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: isVertical ? 0.15 : 0.3),
+        
             weatherForecastByDayTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             weatherForecastByDayTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             weatherForecastByDayTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            weatherForecastByDayTableView.topAnchor.constraint(equalTo: weatherTempsByHoursCollectionView.bottomAnchor)
-        ])
+            weatherForecastByDayTableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor)
+        ]
     }
 }
 
@@ -135,9 +169,6 @@ private extension WeatherDetailsScreenViewController {
         guard let bar = customNavigationBarView.weatherDetailsNavigationBar else { return }
         viewModel.inCity
             .bind(to: bar.placeNameLabel.rx.text)
-            .disposed(by: disposeBag)
-        weatherForecastByDayTableView.rx
-            .setDelegate(self)
             .disposed(by: disposeBag)
         viewModel.outWeather
             .bind(to: weatherForecastByDayTableView.rx.items(
@@ -162,24 +193,30 @@ private extension WeatherDetailsScreenViewController {
                 cell.config(from: model)
             }
             .disposed(by: disposeBag)
-        
-    }
-}
-
-extension WeatherDetailsScreenViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableView.ScrollPosition.none)
-            viewModel.inSelectedIndexOfDay.accept(0)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
+        weatherForecastByDayTableView.rx.willDisplayCell
+            .take(1)
+            .bind { [weak self] (cell, indexPath) in
+                if indexPath.row == 0 {
+                    self?.weatherForecastByDayTableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                    self?.viewModel.inSelectedIndexOfDay.accept(0)
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 
 extension WeatherDetailsScreenViewController: NavigateToSearchByPlaceNameScreenDelegate {
+    func presentSearchByMapScreen() {
+        let searchByMapViewController = SearchByMapScreenViewController()
+        searchByMapViewController.onSelectCity
+            .do(onNext: { _ in
+                searchByMapViewController.dismiss(animated: true)
+            })
+            .bind(to: viewModel.inCity)
+            .disposed(by: searchByMapViewController.disposeBag)
+        navigationController?.present(searchByMapViewController, animated: true)
+    }
+    
     func pushToSearchByPlaceNameScreen() {
         let searchByPlaceNameViewController = SearchByPlaceNameScreenViewController()
         searchByPlaceNameViewController.onSelectCity
@@ -187,7 +224,7 @@ extension WeatherDetailsScreenViewController: NavigateToSearchByPlaceNameScreenD
                 self?.navigationController?.popViewController(animated: true)
             })
             .bind(to: viewModel.inCity)
-            .disposed(by: searchByPlaceNameViewController.disposeBag)
+                .disposed(by: searchByPlaceNameViewController.disposeBag)
         navigationController?.pushViewController(searchByPlaceNameViewController, animated: true)
     }
 }

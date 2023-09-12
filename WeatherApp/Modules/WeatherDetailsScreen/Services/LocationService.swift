@@ -15,6 +15,9 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     override init() {
         super.init()
         locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        
     }
     
     func requestLocationAuth() {
@@ -36,7 +39,7 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
             }
 
             if let placemark = placemarks?.first, let city = placemark.locality {
-                print("City: \(city)")
+                
                 self?.delegate?.locationServiceDidUpdateCityName(cityName: city)
             }
         }
@@ -57,7 +60,6 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("Did update locations")
         locationManager.stopUpdatingLocation()
         if let location = locations.last {
             getCityNameFromLocation(location)

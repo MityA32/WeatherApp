@@ -79,6 +79,66 @@
                   endingLineNumber = "59"
                   offsetFromSymbolStart = "999">
                </Location>
+               <Location
+                  uuid = "BD5B845E-CE21-425A-BE06-208B3E4055C7 - fa6cd9d30f650fd4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;__C.GMSAutocompletePrediction&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (RxSwift.AnyObserver&lt;Swift.Set&lt;WeatherApp.Place&gt;&gt;) -&gt; RxSwift.Disposable in WeatherApp.PlaceNamesProvider.getResults(from: Swift.String) -&gt; RxSwift.Observable&lt;Swift.Set&lt;WeatherApp.Place&gt;&gt;"
+                  moduleName = "WeatherApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dmytrohetman/projects/WeatherApp/WeatherApp/Modules/SearchByPlaceNameScreen/Services/PlaceNamesProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "1088">
+               </Location>
+               <Location
+                  uuid = "BD5B845E-CE21-425A-BE06-208B3E4055C7 - fa6cd9d30f650fd4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;__C.GMSAutocompletePrediction&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (RxSwift.AnyObserver&lt;Swift.Set&lt;WeatherApp.Place&gt;&gt;) -&gt; RxSwift.Disposable in WeatherApp.PlaceNamesProvider.getResults(from: Swift.String) -&gt; RxSwift.Observable&lt;Swift.Set&lt;WeatherApp.Place&gt;&gt;"
+                  moduleName = "WeatherApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dmytrohetman/projects/WeatherApp/WeatherApp/Modules/SearchByPlaceNameScreen/Services/PlaceNamesProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "1168">
+               </Location>
+               <Location
+                  uuid = "BD5B845E-CE21-425A-BE06-208B3E4055C7 - fa6cd9d30f650fd4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;__C.GMSAutocompletePrediction&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (RxSwift.AnyObserver&lt;Swift.Set&lt;WeatherApp.Place&gt;&gt;) -&gt; RxSwift.Disposable in WeatherApp.PlaceNamesProvider.getResults(from: Swift.String) -&gt; RxSwift.Observable&lt;Swift.Set&lt;WeatherApp.Place&gt;&gt;"
+                  moduleName = "WeatherApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dmytrohetman/projects/WeatherApp/WeatherApp/Modules/SearchByPlaceNameScreen/Services/PlaceNamesProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "1014">
+               </Location>
+               <Location
+                  uuid = "BD5B845E-CE21-425A-BE06-208B3E4055C7 - fa6cd9d30f650fd4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;__C.GMSAutocompletePrediction&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (RxSwift.AnyObserver&lt;Swift.Set&lt;WeatherApp.Place&gt;&gt;) -&gt; RxSwift.Disposable in WeatherApp.PlaceNamesProvider.getResults(from: Swift.String) -&gt; RxSwift.Observable&lt;Swift.Set&lt;WeatherApp.Place&gt;&gt;"
+                  moduleName = "WeatherApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dmytrohetman/projects/WeatherApp/WeatherApp/Modules/SearchByPlaceNameScreen/Services/PlaceNamesProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "1090">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

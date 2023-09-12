@@ -9,4 +9,5 @@ import Foundation
 
 protocol NavigateToSearchByPlaceNameScreenDelegate: NSObject {
     func pushToSearchByPlaceNameScreen()
+    func presentSearchByMapScreen()
 }

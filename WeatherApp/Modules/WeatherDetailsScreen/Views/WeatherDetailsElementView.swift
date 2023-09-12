@@ -54,8 +54,8 @@ final class WeatherDetailsElementView: UIView {
         addSubview(leadingImage)
         NSLayoutConstraint.activate([
             leadingImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
-            leadingImage.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-            leadingImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
+            leadingImage.topAnchor.constraint(equalTo: topAnchor),
+            leadingImage.bottomAnchor.constraint(equalTo: bottomAnchor),
             leadingImage.widthAnchor.constraint(equalToConstant: 20)
         ])
     }

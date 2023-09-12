@@ -23,6 +23,10 @@ final class SearchByPlaceNameScreenViewModel {
         setupRx()
     }
     
+    deinit {
+        print("deinit vm")
+    }
+    
     private func setupRx() {
         inPlaceName
             .bind(to: placesProvider.inText)

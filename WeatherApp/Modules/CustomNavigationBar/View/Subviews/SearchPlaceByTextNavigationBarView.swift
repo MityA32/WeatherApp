@@ -67,6 +67,7 @@ final class SearchPlaceByTextNavigationBarView: UIView {
         textField.layer.cornerRadius = 5
         textField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
         textField.textColor = .black
+        textField.placeholder = "Search for a city"
         addSubview(textField)
     }
     

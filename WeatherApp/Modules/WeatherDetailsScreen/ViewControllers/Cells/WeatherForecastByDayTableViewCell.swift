@@ -15,6 +15,12 @@ final class WeatherForecastByDayTableViewCell: UITableViewCell {
     
     func config(from model: [Weather]) {
         contentView.addSubview(cellView)
+        clipsToBounds = false
+        contentView.clipsToBounds = false
+        cellView.clipsToBounds = false
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
+        
         guard let weekday = model.first?.weekdayDate.prefix(2) else { return }
         let maxMinTemps = model.maxMinTemps
         cellView.setupByModel(
@@ -30,17 +36,25 @@ final class WeatherForecastByDayTableViewCell: UITableViewCell {
         ])
         contentView.layer.masksToBounds = false
         selectionStyle = .none
+        
     }
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
+        setupLayer()
+        layer.shadowOpacity = 0.25
+        
+    }
+    
+    
+    
+    func setupLayer() {
+        
         layer.masksToBounds = false
         layer.shadowColor = (UIColor(named: "hex_5A9FF0") ?? .blue).cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 0)
+        layer.shadowOffset = .zero
         layer.shadowRadius = 15
-        layer.shadowOpacity = 0
-        layer.shadowOpacity = 0
-        cellView.setupElementsStyle(isSelected: false)
+//        cellView.setupElementsStyle(isSelected: false)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

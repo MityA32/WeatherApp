@@ -14,6 +14,7 @@ final class WeatherDetailsNavigationBarView: UIView {
     let myLocationImageView = UIImageView()
     weak var delegate: NavigateToSearchByPlaceNameScreenDelegate?
     
+    
     init() {
         super.init(frame: .zero)
         setup()
@@ -26,9 +27,13 @@ final class WeatherDetailsNavigationBarView: UIView {
     func setup() {
         translatesAutoresizingMaskIntoConstraints = false
         setupViews()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(placeNameLabelTapped))
+        let tapPlaceName = UITapGestureRecognizer(target: self, action: #selector(placeNameLabelTapped))
         placeNameLabel.isUserInteractionEnabled = true
-        placeNameLabel.addGestureRecognizer(tapGesture)
+        placeNameLabel.addGestureRecognizer(tapPlaceName)
+        
+        let tapOnMyLocation = UITapGestureRecognizer(target: self, action: #selector(myLocationButtonTapped))
+        myLocationImageView.isUserInteractionEnabled = true
+        myLocationImageView.addGestureRecognizer(tapOnMyLocation)
     }
     
     func setupViews() {
@@ -63,6 +68,10 @@ final class WeatherDetailsNavigationBarView: UIView {
             placeNameLabel.trailingAnchor.constraint(equalTo: myLocationImageView.leadingAnchor, constant: -4)
             
         ])
+    }
+    
+    @objc func myLocationButtonTapped() {
+        delegate?.presentSearchByMapScreen()
     }
     
     @objc func placeNameLabelTapped() {

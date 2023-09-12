@@ -55,6 +55,8 @@
 		93B604082AABFD3700990165 /* PopViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B604072AABFD3700990165 /* PopViewControllerDelegate.swift */; };
 		93B6040B2AAC008A00990165 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B6040A2AAC008A00990165 /* Place.swift */; };
 		93B604122AAC13D100990165 /* SearchResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B604112AAC13D100990165 /* SearchResultsTableViewCell.swift */; };
+		93F49E272AB0816900A24F55 /* SearchByMapScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F49E262AB0816900A24F55 /* SearchByMapScreenViewController.swift */; };
+		93F49E2B2AB0B50C00A24F55 /* SearchPlaceByMapNavigationBarViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F49E2A2AB0B50C00A24F55 /* SearchPlaceByMapNavigationBarViewDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +109,8 @@
 		93B604072AABFD3700990165 /* PopViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopViewControllerDelegate.swift; sourceTree = "<group>"; };
 		93B6040A2AAC008A00990165 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		93B604112AAC13D100990165 /* SearchResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewCell.swift; sourceTree = "<group>"; };
+		93F49E262AB0816900A24F55 /* SearchByMapScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByMapScreenViewController.swift; sourceTree = "<group>"; };
+		93F49E2A2AB0B50C00A24F55 /* SearchPlaceByMapNavigationBarViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceByMapNavigationBarViewDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,9 +149,10 @@
 		93517EF92AA4B95400124014 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				93B603F82AABCCA500990165 /* SearchByPlaceNameScreen */,
 				93517F022AA6049E00124014 /* CustomNavigationBar */,
 				93517EFC2AA4C5AD00124014 /* WeatherDetailsScreen */,
+				93B603F82AABCCA500990165 /* SearchByPlaceNameScreen */,
+				93F49E242AB0813700A24F55 /* SearchByMapScreen */,
 				93517EFB2AA4B96400124014 /* Base */,
 				93517EFA2AA4B95C00124014 /* LaunchScreen */,
 			);
@@ -382,6 +387,7 @@
 				93B604022AABFCEC00990165 /* NavigateToSearchByPlaceNameScreenDelegate.swift */,
 				93B604052AABFD2600990165 /* LocationServiceDelegate.swift */,
 				93B604072AABFD3700990165 /* PopViewControllerDelegate.swift */,
+				93F49E2A2AB0B50C00A24F55 /* SearchPlaceByMapNavigationBarViewDelegate.swift */,
 			);
 			path = Delegates;
 			sourceTree = "<group>";
@@ -400,6 +406,30 @@
 				93B604112AAC13D100990165 /* SearchResultsTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		93F49E242AB0813700A24F55 /* SearchByMapScreen */ = {
+			isa = PBXGroup;
+			children = (
+				93F49E2C2AB0BADD00A24F55 /* ViewModel */,
+				93F49E252AB0814B00A24F55 /* ViewController */,
+			);
+			path = SearchByMapScreen;
+			sourceTree = "<group>";
+		};
+		93F49E252AB0814B00A24F55 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				93F49E262AB0816900A24F55 /* SearchByMapScreenViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		93F49E2C2AB0BADD00A24F55 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		B12A72688EE6FD039CC97C82 /* Pods */ = {
@@ -565,6 +595,7 @@
 				93517F0D2AA6331A00124014 /* String+Extension.swift in Sources */,
 				93517F262AA78E8900124014 /* WeatherForecastParser.swift in Sources */,
 				93B604032AABFCEC00990165 /* NavigateToSearchByPlaceNameScreenDelegate.swift in Sources */,
+				93F49E2B2AB0B50C00A24F55 /* SearchPlaceByMapNavigationBarViewDelegate.swift in Sources */,
 				93517F492AAA9BA600124014 /* WeatherDetailsNavigationBarView.swift in Sources */,
 				93517F052AA60E4C00124014 /* CustomNavigationBarView.swift in Sources */,
 				93517F282AA78F8B00124014 /* Weather.swift in Sources */,
@@ -590,6 +621,7 @@
 				9351B87F2AA4B4DB00D8EFAF /* AppDelegate.swift in Sources */,
 				93B603FE2AABD53600990165 /* SearchByPlaceNameScreenViewModel.swift in Sources */,
 				93517F312AA7DAB700124014 /* WeatherForecastByDayTableViewCell.swift in Sources */,
+				93F49E272AB0816900A24F55 /* SearchByMapScreenViewController.swift in Sources */,
 				9351B8812AA4B4DB00D8EFAF /* SceneDelegate.swift in Sources */,
 				93517F222AA78A0700124014 /* Fetchable.swift in Sources */,
 				93517F402AAA3B7700124014 /* Array+Extension.swift in Sources */,

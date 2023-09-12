@@ -12,6 +12,7 @@ final class CustomNavigationBarView: UIView {
     var weatherDetailsNavigationBar: WeatherDetailsNavigationBarView?
     var searchPlaceByTextNavigationBar: SearchPlaceByTextNavigationBarView?
     var searchPlaceByMapNavigationBar: SearchPlaceByMapNavigationBarView?
+    
     weak var delegateToSearchByPlaceName: NavigateToSearchByPlaceNameScreenDelegate? {
         didSet {
             weatherDetailsNavigationBar?.delegate = delegateToSearchByPlaceName
@@ -24,6 +25,11 @@ final class CustomNavigationBarView: UIView {
         }
     }
     
+    weak var delegateDismissViewController: SearchPlaceByMapNavigationBarViewDelegate? {
+        didSet {
+            searchPlaceByMapNavigationBar?.delegate = delegateDismissViewController
+        }
+    }
     
     let type: ScreenType
     
@@ -85,6 +91,5 @@ final class CustomNavigationBarView: UIView {
             searchPlaceByMapNavigationBar.trailingAnchor.constraint(equalTo: trailingAnchor),
             searchPlaceByMapNavigationBar.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-        
     }
 }
