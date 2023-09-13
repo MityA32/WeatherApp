@@ -27,7 +27,7 @@ final class WeatherForecastProvider {
         inCity
             .throttle(.milliseconds(200), latest: false, scheduler: MainScheduler.asyncInstance)
             .flatMap { [weak self] cityName -> Single<WeatherForecastList> in
-                guard let self = self,
+                guard let self,
                       let cityNameEncoded = cityName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
                       let url = CustomURL.byCityName(cityNameEncoded).url
                 else { return Single.error(NSError(domain: "Invalid URL", code: 0, userInfo: nil)) }

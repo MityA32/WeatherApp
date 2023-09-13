@@ -39,7 +39,6 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
             }
 
             if let placemark = placemarks?.first, let city = placemark.locality {
-                
                 self?.delegate?.locationServiceDidUpdateCityName(cityName: city)
             }
         }
