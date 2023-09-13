@@ -39,7 +39,6 @@ final class WeatherDetailsScreenViewController: UIViewController {
     private func setup() {
         setupLocationServices()
         setupViews()
-        
         commonConstraints = setupedConstraints(isVertical: true)
         NSLayoutConstraint.activate(commonConstraints)
         setupRx()
@@ -126,9 +125,9 @@ extension WeatherDetailsScreenViewController {
         weatherForecastByDayTableView.translatesAutoresizingMaskIntoConstraints = false
         weatherForecastByDayTableView.register(WeatherForecastByDayTableViewCell.self, forCellReuseIdentifier: WeatherForecastByDayTableViewCell.id)
         weatherForecastByDayTableView.separatorStyle = .none
+        weatherForecastByDayTableView.backgroundColor = .white
         weatherForecastByDayTableView.rowHeight = UITableView.automaticDimension
         view.addSubview(weatherForecastByDayTableView)
-        
     }
     
     private func setupedConstraints(isVertical: Bool) -> [NSLayoutConstraint] {
@@ -170,6 +169,8 @@ private extension WeatherDetailsScreenViewController {
         viewModel.inCity
             .bind(to: bar.placeNameLabel.rx.text)
             .disposed(by: disposeBag)
+
+
         viewModel.outWeather
             .bind(to: weatherForecastByDayTableView.rx.items(
                 cellIdentifier: WeatherForecastByDayTableViewCell.id,
@@ -177,29 +178,34 @@ private extension WeatherDetailsScreenViewController {
                 cell.config(from: model.value)
             }
             .disposed(by: disposeBag)
+    
+        weatherForecastByDayTableView.rx.willDisplayCell
+            .compactMap { [weak self] cell, indexPath in
+                if self?.weatherForecastByDayTableView.indexPathsForSelectedRows == nil, indexPath.row == 0 {
+                    self?.weatherForecastByDayTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .none)
+                    return 0
+                }
+                return nil
+            }
+            .bind(to: viewModel.inSelectedIndexOfDay)
+            .disposed(by: disposeBag)
+        
         weatherForecastByDayTableView.rx
             .itemSelected
             .map { $0.row }
             .bind(to: viewModel.inSelectedIndexOfDay)
             .disposed(by: disposeBag)
+        
         viewModel.outWeatherForecastBySelectedDay
             .bind(onNext: { [weak self] weatherData in
                 self?.generalDetailsView.config(from: weatherData)
             })
             .disposed(by: disposeBag)
+        
         guard let weatherTempsByHoursCollectionView else { return }
         viewModel.outWeatherForecastBySelectedDay
             .bind(to: weatherTempsByHoursCollectionView.rx.items(cellIdentifier: WeatherTempsByHoursCollectionViewCell.id, cellType: WeatherTempsByHoursCollectionViewCell.self)) { index, model, cell in
                 cell.config(from: model)
-            }
-            .disposed(by: disposeBag)
-        weatherForecastByDayTableView.rx.willDisplayCell
-            .take(1)
-            .bind { [weak self] (cell, indexPath) in
-                if indexPath.row == 0 {
-                    self?.weatherForecastByDayTableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-                    self?.viewModel.inSelectedIndexOfDay.accept(0)
-                }
             }
             .disposed(by: disposeBag)
     }

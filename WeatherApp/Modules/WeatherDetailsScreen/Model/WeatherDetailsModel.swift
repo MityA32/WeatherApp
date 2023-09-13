@@ -15,7 +15,7 @@ final class WeatherDetailsModel {
     
     private let disposeBag = DisposeBag()
     let inCity = PublishRelay<String>()
-    let inSelectedIndexOfDay = BehaviorRelay<Int>(value: 0)
+    let inSelectedIndexOfDay = PublishRelay<Int>()
     let outWeatherForecast = PublishRelay<OrderedDictionary<String, [Weather]>>()
     let outWeatherForecastBySelectedDay = PublishRelay<[Weather]>()
 
@@ -33,6 +33,7 @@ final class WeatherDetailsModel {
             .disposed(by: self.disposeBag)
         inSelectedIndexOfDay
             .withLatestFrom(outWeatherForecast) { (selectedIndex, weatherData) in
+
                 let selectedDate = Array(weatherData.keys)[selectedIndex]
                 return weatherData[selectedDate] ?? []
             }
